@@ -1,0 +1,72 @@
+通过对比分析
+for (int i = 8; i >= 0; i--) {
+            for (int num : a) {
+                if (i < num) continue;
+                dp[i] = dp[i] || dp[i - num];
+            }
+        }
+
+        for (int i = 0; i <= 8; i++) {
+            for (int num : a) {
+                if (i < num) continue;
+                dp2[i] = dp2[i] || dp2[i - num];
+            }
+        }
+        for (int num : a) {
+            for (int i = num; i <= 8; i++) {
+
+
+                dp3[i] = dp3[i] || dp3[i - num];
+            }
+        }
+        for (int num : a) {
+            for (int i = 8; i >= num; i--) {
+                dp4[i] = dp4[i] || dp4[i - num];
+            }
+        }
+==========================================
+0 = true
+1 = false
+2 = true
+3 = true
+4 = false
+5 = false
+6 = false
+7 = false
+8 = false
+=================
+0 = true
+1 = false
+2 = true
+3 = true
+4 = true
+5 = true
+6 = true
+7 = true
+8 = true
+=================
+0 = true
+1 = false
+2 = true
+3 = true
+4 = true
+5 = true
+6 = true
+7 = true
+8 = true
+=================
+0 = true
+1 = false
+2 = true
+3 = true
+4 = true
+5 = true
+6 = false
+7 = true
+8 = false
+得出简单的结论（但是不一定准确，在以后的刷题中，如果遇到不符合结论的情况，会回来修改）
+外循环 倒叙 ;内循环为 num:nums 则只更新这几个num.
+外循环num:nums 内循环倒叙 则更新所有组合 且每个数字 只会利用一次 例如 分段题。
+正序 情况下 内外怎么放 无区别 会更新所有组合 且每个数字 无限次。例如硬币题
+
+8 = true
