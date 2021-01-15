@@ -1,0 +1,18 @@
+class Solution(object):
+    def stoneGameII(self, piles):
+        """
+        :type piles: List[int]
+        :rtype: int
+        """
+        memo={}
+        def helper(a,m):
+            if len(a)==0: return 0
+            if (len(a),m) in memo: return memo[(len(a),m)]
+            res=0
+            for i in range(1, min(2*m,len(a))+1):
+                tmp = sum(a)-helper(a[i:],max(m,i))
+                res = max(res,tmp)
+            memo[(len(a),m)]=res
+            return res
+        
+        return helper(piles,1)
