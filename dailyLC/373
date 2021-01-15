@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int getMoneyAmount(int n) {
+        vector<vector<int>> memo(n + 1, vector<int>(n + 1, 0));
+        return helper(1, n, memo);
+    }
+    int helper(int start, int end, vector<vector<int>>& memo) {
+        if (start >= end) return 0;
+        if (memo[start][end] > 0) return memo[start][end];
+        int res = INT_MAX;
+        for (int k = start; k <= end; ++k) {
+            int t = k + max(helper(start, k - 1, memo), helper(k + 1, end, memo));
+            res = min(res, t);
+        }
+        return memo[start][end] = res;
+    }
+};
