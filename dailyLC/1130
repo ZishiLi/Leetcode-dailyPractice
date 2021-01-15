@@ -1,0 +1,20 @@
+class Solution(object):
+    def mctFromLeafValues(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: int
+        """
+        memo={}
+        def helper(s,t):
+            if s==t: return 0
+            if (s,t) in memo: return memo[(s,t)]
+            res=float('inf')
+            for i in range(s,t):
+                l=helper(s,i)
+                r=helper(i+1,t)
+                tmp=l+r+max(arr[s:i+1])*max(arr[i+1:t+1])
+                res=min(res,tmp)
+            memo[(s,t)] = res
+            return res
+        
+        return helper(0,len(arr)-1)
