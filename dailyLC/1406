@@ -1,0 +1,19 @@
+class Solution {
+    public String stoneGameIII(int[] a) {
+        int[] dp=new int[50005];
+        int n=a.length-1;
+        for(int i=n;i>=0;i--){
+            dp[i]=a[i]-dp[i+1];//1堆
+            if(i+1<=n)
+                dp[i]=Math.max(dp[i],a[i]+a[i+1]-dp[i+2]);//2堆
+            if(i+2<=n)
+                dp[i]=Math.max(dp[i],a[i]+a[i+1]+a[i+2]-dp[i+3]);//3堆
+        }
+        if(dp[0]>0)
+            return "Alice";
+        else if(dp[0]==0)
+            return "Tie";
+        else 
+            return "Bob"; 
+    }
+}
