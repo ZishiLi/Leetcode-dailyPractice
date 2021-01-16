@@ -1,0 +1,29 @@
+class Solution {
+    public int numberWays(List<List<Integer>> hats) {
+        int mod = (int)1e9 + 7;
+        int n = hats.size();
+        long[] dp = new long[1 << n];
+        Map<Integer, Set<Integer>> hatToPpl = new HashMap<>();
+        Set<Integer> set = new HashSet<>();
+        for(int i = 0; i < hats.size(); i++) {
+            for(int j = 0; j < hats.get(i).size(); j++) {
+                hatToPpl.computeIfAbsent(hats.get(i).get(j), k -> new HashSet<>()).add(i);
+                set.add(hats.get(i).get(j));
+            }
+        }
+        List<Integer> allHats = new ArrayList<>(set);
+        dp[0] = 1L;
+        
+        for(int i = 0; i < allHats.size(); i++) {
+            for(int j = dp.length - 1; j >= 0; j--) {
+                for(int ppl : hatToPpl.get(allHats.get(i))) {
+                    if((j & (1 << ppl)) == 0) {
+                        int newState = j | (1 << ppl);
+                        dp[newState] = (dp[newState] + dp[j]) % mod;
+                    }
+                }
+            }
+        }
+        return (int)dp[(1 << n) - 1];
+    }
+}
