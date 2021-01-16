@@ -1,0 +1,17 @@
+class StockSpanner {
+public:
+    StockSpanner() {}
+    
+    int next(int price) {
+    	nums.push_back(price);
+		int i = (int)nums.size() - 2;
+		while (!pre.empty() && i >= 0 && nums[i] <= price) {
+			i = pre[i];
+		}
+		pre.push_back(i);
+		return (int)pre.size() - 1 - i;
+    }
+
+private:
+	vector<int> nums, pre;
+};
