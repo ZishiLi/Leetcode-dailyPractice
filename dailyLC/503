@@ -1,0 +1,14 @@
+class Solution(object):
+    def nextGreaterElements(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        _len = len(nums)
+        res = [-1] * _len
+        for i in xrange(_len):
+            for j in xrange(i + 1, _len * 2):
+                if nums[j % _len] > nums[i]:
+                    res[i] = nums[j % _len]
+                    break
+        return res
