@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minInsertions(string s) {
+        int row = s.size();
+        int col = s.size();
+        vector<int> temp(col, 0);
+        vector<vector<int>> dp(row, temp);
+        
+        for(int i=s.size()-2;i>=0;i--){
+            for(int j=i+1;j<s.size();j++){
+                if (s[i]==s[j]){
+                    dp[i][j] = dp[i+1][j-1];
+                }
+                else{
+                    int res = min(dp[i+1][j], dp[i][j-1])+1;
+                    dp[i][j] = res;
+                }
+            }
+        }
+        
+        return dp[0][s.size()-1];
+    }
+};
