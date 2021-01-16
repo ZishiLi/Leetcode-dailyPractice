@@ -1,0 +1,20 @@
+class Solution(object):
+    def smallestSufficientTeam(self, req_skills, people):
+        """
+        :type req_skills: List[str]
+        :type people: List[List[str]]
+        :rtype: List[int]
+        """
+        dp = {0:[]}
+        d = {v:i for i,v in enumerate(req_skills)}
+        
+        for i,p in enumerate(people):
+            bits = 0
+            for bit in p: bits |= (1<<d[bit])
+            
+            for reached_skill, need in dp.items():
+                add_him = reached_skill | bits
+                if add_him not in dp or len(dp[add_him])>len(need)+1:
+                    dp[add_him]=need+[i]
+            
+        return dp[(1<<len(req_skills))-1]
